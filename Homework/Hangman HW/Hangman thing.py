@@ -3,8 +3,6 @@ import random
 import time
 # ask user for information
 name = input("What is your name? ")
-
-
 # create a list of words
 # pick a random word
 # the user to guess
@@ -19,28 +17,15 @@ with open('Homework\Hangman HW\Wordlist.txt', 'r') as file:
         # reading each word         
         for word in line.split():
             words+=1
-            
-            if wordict == 1:
-                wordListEasy.append(word) 
-            if wordict == 2:
-                wordListMedium.append(word)
-            if wordict == 3:
-                wordListHard.append(word)  
-            if word == 'LEVELONE':
-                wordict = 1
-            if word == 'LEVELTWO':
-                wordict = 2  
-            if word == 'LEVELTHREE':
-                wordict = 3
-          
+            if wordict == 1: wordListEasy.append(word) 
+            if wordict == 2: wordListMedium.append(word)
+            if wordict == 3: wordListHard.append(word)  
+            if word == 'LEVELONE': wordict = 1
+            if word == 'LEVELTWO': wordict = 2  
+            if word == 'LEVELTHREE': wordict = 3
 print(name, end = '')
 game = input(" , do you want to play? ")
-
-print(wordListEasy)
-print(wordListMedium)
-print(wordListHard)
 wordList = []
-
 while game == 'yes':
     level = input("Easy, Medium, or Hard? (1,2,3)")
     #Level checker
@@ -64,10 +49,8 @@ while game == 'yes':
     winPoints = 0
     while turns>0 and winPoints< len(uniqueChar):
         for char in word:
-            if char in guess:
-                print(char, end=' ')
-            else:
-                print('_', end=' ')
+            if char in guess: print(char, end=' ')
+            else: print('_', end=' ')
         print()
         print(name, end=' ')
         letter= input(" please give me a letter : ")
