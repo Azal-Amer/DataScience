@@ -4,7 +4,7 @@ myList = [1,2,3,4,5,5,2,3,4,5,6,'a', 'a']
 sumList = 0
 for x in myList:
     if isinstance(x,int):
-        sumList += (myList[x-1])
+        sumList += (myList[x])
     else:
         sumList += 0
 print(sumList)
