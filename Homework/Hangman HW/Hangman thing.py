@@ -43,6 +43,7 @@ while game == 'yes':
     word = random.choice(wordList)
     guess=''
     uniqueChar = set(word)
+    #Got tired and wanted to avoid a charecter printing rewrite on the winning system, so I just counted for unique charecters in the selected word for speed
     turns= len(word) +5
     print (name, " ,you have " + str(turns) + " turns to guess the word", end='')
     print()
