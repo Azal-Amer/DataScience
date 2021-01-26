@@ -1,69 +1,63 @@
 # input, random, time to delay
 import random
 import time
-# ask user for information
+from urllib.request import urlopen
+import json
+import random
 name = input("What is your name? ")
-# create a list of words
-# pick a random word
-# the user to guess
-# wordList = ['pyhton', 'java', 'PHP', 'RAM', 'computer', 'keyboard']
-wordListEasy = []
-wordListMedium = []
-wordListHard = []
-with open('Homework\Hangman HW\Wordlist.txt', 'r') as file:
-    for line in file: 
-        words = 0
-        wordict = 0
-        # reading each word         
-        for word in line.split():
-            words+=1
-            if wordict == 1: wordListEasy.append(word) 
-            if wordict == 2: wordListMedium.append(word)
-            if wordict == 3: wordListHard.append(word)  
-            if word == 'LEVELONE': wordict = 1
-            if word == 'LEVELTWO': wordict = 2  
-            if word == 'LEVELTHREE': wordict = 3
-print(name, end = '')
-game = input(" , do you want to play? ")
-wordList = []
-while game == 'yes':
-    level = input("Easy, Medium, or Hard? (1,2,3)")
-    #Level checker
-    if int(level) == 1 or int(level) == 2 or int(level) == 3:
-        savedLevel = int(level)
-        if savedLevel == 1:
-            wordList = wordListEasy.copy()
-        if savedLevel == 2:
-            wordList = wordListMedium.copy()
-        if savedLevel == 3:
-            wordList = wordListHard.copy()
-    else:
-        print("error, running in easy")
-        wordlist = wordListEasy.copy
-    word = random.choice(wordList)
-    guess=''
-    uniqueChar = set(word)
-    #Got tired and wanted to avoid a charecter printing rewrite on the winning system, so I just counted for unique charecters in the selected word for speed
-    turns= len(word) +5
-    print (name, " ,you have " + str(turns) + " turns to guess the word", end='')
-    print()
-    winPoints = 0
-    while turns>0 and winPoints< len(uniqueChar):
-        for char in word:
-            if char in guess: print(char, end=' ')
-            else: print('_', end=' ')
+
+#JSON Fetcher
+
+def word_prompt(data, length):
+    all_words = list(data.keys())
+    while True:
+        print('here')
+        word = random.choice(all_words)
+        if len(word) < length and len(word) > 2:
+            return word
+if __name__ == "__main__":
+    request = urlopen("https://raw.githubusercontent.com/matthewreagan/WebstersEnglishDictionary/master/dictionary_compact.json")
+    response = request.read()
+    data = json.loads(response)
+    # print(name, end = '')
+    game = input(" ,do you want to play? ")
+    while game == 'yes':
+        difficulty = input("Easy, Medium, or Hard? (1,2,3)")
+        word = ''
+        if difficulty == '1':
+            print("Easy Mode")
+            word  = word_prompt(data, 3)
+        elif difficulty == '2':
+            print("Medium Mode")
+            word = word_prompt(data, 7)
+        elif difficulty == '3':
+            print("Hard Mode")
+            word = word_prompt(data,10)
+        else:
+            print("error, running in easy")
+        print(word)
+        #Level checker
+        guess=''
+        uniqueChar = set(word)
+        turns= len(uniqueChar) +5
+        print (name, " ,you have " + str(turns) + " turns to guess the word", end='')
         print()
-        print(name, end=' ')
-        letter= input(" please give me a letter : ")
-        guess +=letter
-        winPoints += 1
-        turns -=1
-    if winPoints == len(uniqueChar):
-        print("you win yay! The word was " + word)
-    else:
-        print("loser. The word was " + word)
-    game=input(" Do you want to play again ")
-print(name, ", come back anytime!")
-time.sleep(5)
+        while turns>0 and guess != word:
+            for char in word:
+                if char in guess: print(char, end=' ')
+                else: print('_', end=' ')
+            print()
+            print(name, end=' ')
+            letter= input(" please give me a letter : ")
+            guess +=letter
+            turns -=1            
+        if guess == word:
+            print("you win yay! The word was " + word)
+        else:
+            print("loser. The word was " + word)
+        game=input(" Do you want to play again ")
+    print(name, ", come back anytime!")
+    time.sleep(5)
 # Need to add winning statement
 #Need wordlist w/difficulty
+#bug w/ wrong char to correct answer, rewrite winpoints
