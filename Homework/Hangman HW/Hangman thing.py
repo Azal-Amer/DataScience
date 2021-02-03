@@ -21,12 +21,12 @@ if __name__ == "__main__":
     data = json.loads(response)
     # print(name, end = '')
     game = input(" ,do you want to play? ")
-    while game == 'yes':
+    while game.lower() == 'yes':
         difficulty = input("Easy, Medium, or Hard? (1,2,3)")
         word = ''
         if difficulty == '1':
             print("Easy Mode")
-            word  = word_prompt(data, 3)
+            word  = word_prompt(data, 5)
         elif difficulty == '2':
             print("Medium Mode")
             word = word_prompt(data, 7)
@@ -42,16 +42,24 @@ if __name__ == "__main__":
         turns= len(uniqueChar) +5
         print (name, " ,you have " + str(turns) + " turns to guess the word", end='')
         print()
-        while turns>0 and guess != word:
+        win = False
+
+        while turns>0 and win== False:
+            win = True
             for char in word:
-                if char in guess: print(char, end=' ')
-                else: print('_', end=' ')
+                if char in guess:
+                     print(char, end=' ')
+                else: 
+                    print('_', end=' ')
+                    win = False
             print()
             print(name, end=' ')
             letter= input(" please give me a letter : ")
             guess +=letter
-            turns -=1            
-        if guess == word:
+            turns -=1
+            #Guess is out of order, so instead write a string with the charecter added to check, 
+            #check if underscore
+        if win == True:
             print("you win yay! The word was " + word)
         else:
             print("loser. The word was " + word)
