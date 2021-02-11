@@ -19,8 +19,8 @@ if __name__ == "__main__":
     request = urlopen("https://raw.githubusercontent.com/matthewreagan/WebstersEnglishDictionary/master/dictionary_compact.json")
     response = request.read()
     data = json.loads(response)
-    # print(name, end = '')
-    game = input(" ,do you want to play? ")
+    print(name, end = '')
+    game = input(",do you want to play? ")
     while game.lower() == 'yes':
         difficulty = input("Easy, Medium, or Hard? (1,2,3)")
         word = ''
