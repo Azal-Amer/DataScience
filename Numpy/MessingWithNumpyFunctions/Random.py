@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 randomArray = [0,0,0,0,0,0,0,0,0,0,0]
 arrayi = 0
 for x=0;x<20;x+=1:
+    
     divisor = geek.reciprocal(geek.random.random_sample())
     divident = geek.random.random_sample()
     randomInt = geek.around(divisor/divident)
